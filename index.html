@@ -1,0 +1,170 @@
+<script type="text/javascript">
+        var gk_isXlsx = false;
+        var gk_xlsxFileLookup = {};
+        var gk_fileData = {};
+        function filledCell(cell) {
+          return cell !== '' && cell != null;
+        }
+        function loadFileData(filename) {
+        if (gk_isXlsx && gk_xlsxFileLookup[filename]) {
+            try {
+                var workbook = XLSX.read(gk_fileData[filename], { type: 'base64' });
+                var firstSheetName = workbook.SheetNames[0];
+                var worksheet = workbook.Sheets[firstSheetName];
+
+                // Convert sheet to JSON to filter blank rows
+                var jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1, blankrows: false, defval: '' });
+                // Filter out blank rows (rows where all cells are empty, null, or undefined)
+                var filteredData = jsonData.filter(row => row.some(filledCell));
+
+                // Heuristic to find the header row by ignoring rows with fewer filled cells than the next row
+                var headerRowIndex = filteredData.findIndex((row, index) =>
+                  row.filter(filledCell).length >= filteredData[index + 1]?.filter(filledCell).length
+                );
+                // Fallback
+                if (headerRowIndex === -1 || headerRowIndex > 25) {
+                  headerRowIndex = 0;
+                }
+
+                // Convert filtered JSON back to CSV
+                var csv = XLSX.utils.aoa_to_sheet(filteredData.slice(headerRowIndex)); // Create a new sheet from filtered array of arrays
+                csv = XLSX.utils.sheet_to_csv(csv, { header: 1 });
+                return csv;
+            } catch (e) {
+                console.error(e);
+                return "";
+            }
+        }
+        return gk_fileData[filename] || "";
+        }
+        </script><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nggas in Paris - Meme Coin</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #000000;
+            color: #ff0000;
+            text-align: center;
+        }
+        header {
+            background-color: #ff0000;
+            padding: 20px;
+            color: #000000;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        nav {
+            background-color: #1a1a1a;
+            padding: 10px;
+        }
+        nav a {
+            color: #ff0000;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+        nav a:hover {
+            color: #ffffff;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+        }
+        .info-box {
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .info-box h2 {
+            margin-top: 0;
+            color: #ff0000;
+        }
+        .info-box p {
+            color: #ffffff;
+            line-height: 1.6;
+        }
+        .social-link {
+            display: inline-block;
+            margin: 10px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            color: #000000;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+        .social-link:hover {
+            background-color: #cc0000;
+        }
+        footer {
+            background-color: #1a1a1a;
+            padding: 10px;
+            color: #ffffff;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        @media (max-width: 600px) {
+            header h1 {
+                font-size: 1.8em;
+            }
+            nav a {
+                display: block;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Nggas in Paris - Meme Coin</h1>
+    </header>
+    <nav>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#details">Details</a>
+    </nav>
+    <div class="container">
+        <section id="home" class="info-box">
+            <h2>Welcome to Nggas in Paris</h2>
+            <p>Join the hottest meme coin on the Solana blockchain! Inspired by viral culture, Nggas in Paris is here to bring fun and community to the crypto world.</p>
+        </section>
+        <section id="about" class="info-box">
+            <h2>About the Coin</h2>
+            <p>Nggas in Paris is a meme coin launched on the Pump.fun DEX, designed to capture the spirit of internet culture with a bold black and red vibe. Get in on the action and join our growing community!</p>
+        </section>
+        <section id="details" class="info-box">
+            <h2>Token Details</h2>
+            <p><strong>Contract Address:</strong> Eq7MotGqiEF2j88AD1a8xpjfc7x1bhQuXcQsRpB9pump</p>
+            <p><strong>Liquidity:</strong> $47</p>
+            <p><strong>Market Cap:</strong> $4.5 million</p>
+            <p><strong>DEX:</strong> <a href="https://pump.fun" target="_blank" style="color: #ff0000;">Pump.fun</a></p>
+            <p><strong>Social:</strong> <a href="https://x.com/ParisIn88141" target="_blank" class="social-link">Follow us on X</a></p>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2025 Nggas in Paris. All rights reserved.</p>
+    </footer>
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const sectionId = this.getAttribute('href').substring(1);
+                const section = document.getElementById(sectionId);
+                section.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body>
+</html>
